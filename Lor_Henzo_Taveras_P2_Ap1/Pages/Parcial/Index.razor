@@ -1,7 +1,62 @@
 ﻿@page "/Parcial/Index"
+@inject HttpClient httpClient
+@using Library
 
-<h3>Index</h3>
+
+<div class="card">
+    <div class="card">
+        <div class="card-header">
+            <h3>Accesorios</h3>
+            <a href="/Parcial/create" class="btn btn-outline-primary">Crear vehiculo</a>
+        </div>
+        <div class="card-body">
+            @if (vehiculo is not null)
+            {
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Vehiculo Id</th>
+                            <th>Fecha</th>
+                            <th>Descripci&omicron;n</th>
+                            <th>Costo</th>
+                            <th>Gastos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var vehiculo in vehiculo)
+                        {
+                            <tr>
+                                <td>@vehiculo.VehiculoId</td>
+                                <td>@vehiculo.Fecha.ToString("MM/dd/yyyy")</td>
+                                <td>@vehiculo.Descripcion</td>
+                                <td>@vehiculo.Costo</td>
+                                <td>@vehiculo.Gastos</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="form-row justify-content-sm-between" aria-orientation="vertical">
+            <div class="col-12 col-sm-3">
+                <label for="CantidadRegistro" class="col-form-label"><strong>Filas</strong>&nbsp;</label>
+                <input id="CantidadRegistro" @bind-value="@conteo" disabled class="form-control" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 @code {
+    public List<Vehiculo>? vehiculo { get; set; }
+    public int conteo { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        vehiculo = await httpClient.GetFromJsonAsync<List<Vehiculo>>("api/Vehiculo");
+    }
 
 }
