@@ -1,4 +1,4 @@
-﻿@page "/IndexAccesorios"
+﻿@page "/Index/Accesorios"
 @using Library;
 @inject HttpClient httpClient
 
@@ -53,7 +53,7 @@
     protected override async void OnInitialized()
     {
         Accesorios = await httpClient.GetFromJsonAsync<List<Accesorios>>($"api/Accesorios");
-        conteo = Accesorios != null ? Accesorios.Count() : 0;
+        conteo = Accesorios != null ? Accesorios!.Count() : 0;
         StateHasChanged();
     }
 }
