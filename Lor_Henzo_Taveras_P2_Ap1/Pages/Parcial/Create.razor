@@ -46,10 +46,11 @@
 					<InputNumber id="Costo" class="form-control" @bind-Value="vehiculo.Costo" />
 					<ValidationMessage For="@(() => vehiculo.Costo)"></ValidationMessage>
 				</div>
+
 				<div class="col-4">
 					@*Gastos*@
 					<label class="form-label" for="gastos"><strong>gastos:</strong></label>
-					<InputNumber id="Gastos" class="form-control" @bind-Value="vehiculo.Gastos"/>
+					<InputNumber id="Gastos" class="form-control" @bind-Value="vehiculo.Gastos" disabled/>
 				</div>
 
 
@@ -154,6 +155,7 @@
 	public string mensaje { get; set; } = string.Empty;
 
 	public int Id { get; set; }
+	public decimal Gastos { get; set; }
 
 	public decimal Valor { get; set; }
 
