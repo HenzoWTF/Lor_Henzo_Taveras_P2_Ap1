@@ -50,7 +50,15 @@
 				<div class="col-4">
 					@*Gastos*@
 					<label class="form-label" for="gastos"><strong>gastos:</strong></label>
-					<InputNumber id="Gastos" class="form-control" @bind-Value="vehiculo.Gastos" disabled/>
+					<InputNumber id="Gastos" class="form-control" @bind-Value="vehiculo.Gastos" disabled />
+					<span class="form-control">
+						@{
+							foreach (var detalle in vehiculo.vehiculosDetalles)
+							{
+								vehiculo.Gastos = vehiculo.Costo + detalle.Valor;
+							}
+						}
+					</span>
 				</div>
 
 

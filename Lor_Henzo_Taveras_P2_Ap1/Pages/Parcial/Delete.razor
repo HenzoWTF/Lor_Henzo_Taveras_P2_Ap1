@@ -1,7 +1,71 @@
-﻿@page "/Parcial/Delete"
+﻿@page "/Parcial/Delete/{Id:int}"
+@using Library
 
-<h3>Delete</h3>
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+
+<PageTitle>Eliminar Vehiculo</PageTitle>
+<div class="container">
+	<div class="card shadow-lg">
+		@*Header*@
+		<div class="card-header">
+			<h3><strong>Eliminar Vehiculo</strong></h3>
+		</div>
+		<div class="card-body col-5">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4"></div>
+			<h4><strong>¿Est&aacute;s seguro de que quieres eliminar este Vehiculo?</strong></h4>
+			@*Datos*@
+			<div class="mb-1">
+				<p class="mb-0">Vehiculo: @vehiculo.VehiculoId</p>
+			</div>
+			<div class="mb-1">
+				<p class="mb-0">Fecha: @vehiculo.Fecha</p>
+			</div>
+			<div class="mb-1">
+				<p class="mb-0">Descripci&oacute;n: @vehiculo.Descripcion</p>
+			</div>
+			<div class="mb-1">
+				<p class="mb-0">Costo: @vehiculo.Costo</p>
+			</div>
+
+		</div>
+
+		<div class="card-footer d-flex justify-content-center">
+			<div class="px-2">
+				<a href="/Parcial/Index" class="btn btn-outline-primary"><i class="bi bi-box-arrow-left" /> Volver</a>
+			</div>
+			<button type="button" class="btn btn-outline-danger" @onclick="Eliminar"><i class="bi bi-trash3-fill" /> Eliminar</button>
+		</div>
+
+	</div>
+</div>
+@mensaje
 
 @code {
+	[Parameter]
+	public int Id { get; set; }
+	public Vehiculo vehiculo { get; set; } = new Vehiculo();
+	public string mensaje { get; set; } = string.Empty;
 
+	protected override async Task OnInitializedAsync()
+	{
+		if (Id > 0)
+		{
+			vehiculo = await httpClient.GetFromJsonAsync<Vehiculo>($"api/Vehiculo/{Id}");
+		}
+	}
+
+	public async Task Eliminar()
+	{
+		var response = await httpClient.DeleteAsync($"api/Vehiculo/{Id}");
+
+		if (response.IsSuccessStatusCode)
+		{
+
+			navigationManager.NavigateTo("/Parcial/Index");
+		}
+		else
+			mensaje = "El ticket no se pudo eliminar con éxito";
+	}
 }

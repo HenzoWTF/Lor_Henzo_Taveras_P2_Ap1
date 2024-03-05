@@ -31,6 +31,11 @@
                                 <td>@vehiculo.Descripcion</td>
                                 <td>@vehiculo.Costo</td>
                                 <td>@vehiculo.Gastos</td>
+                                <td>
+                                    <a href="/Parcial/Edit/@vehiculo.VehiculoId"><i class="bi bi-pencil-square" /></a>
+                                    <a href="/Parcial/View/@vehiculo.VehiculoId"><i class="bi bi-eye-fill" /></a>
+                                    <a href="/Parcial/Delete/@vehiculo.VehiculoId" class="link-danger"><i class="bi bi-trash" /></a>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -41,7 +46,7 @@
     <div class="card-footer">
         <div class="form-row justify-content-sm-between" aria-orientation="vertical">
             <div class="col-12 col-sm-3">
-                <label for="CantidadRegistro" class="col-form-label"><strong>Filas</strong>&nbsp;</label>
+                <label for="CantidadRegistro" class="col-form-label"><strong>Vehiculos</strong>&nbsp;</label>
                 <input id="CantidadRegistro" @bind-value="@conteo" disabled class="form-control" />
             </div>
         </div>

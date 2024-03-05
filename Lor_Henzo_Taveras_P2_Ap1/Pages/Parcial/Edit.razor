@@ -1,7 +1,208 @@
-﻿@page "/Parcial/Edit"
+﻿@page "/Parcial/Edit/{Id:int}"
 
-<h3>Edit</h3>
+@using Library
+@inject NavigationManager navigationManager
+@inject HttpClient httpClient
+
+<PageTitle>Crear vehiculo</PageTitle>
+
+
+<EditForm Model="vehiculo" OnValidSubmit="Guardar">
+	<DataAnnotationsValidator />
+	<div class="container">
+		<div class="card shadow-lg">
+			@*Header*@
+			<div class="card-header">
+				<h3><strong>Crear Nuevo Vehiculo</strong></h3>
+			</div>
+			@*Cuerpo*@
+			<div class="card-body">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+						<div class="row input-group col-4">
+							@*Vehiculo ID*@
+							<label class="form-label" for="VehiculoId"><strong>VehiculoId:</strong></label>
+							<InputNumber id="vehiculoId" class="form-control" @bind-Value="vehiculo.VehiculoId" />
+							<ValidationMessage For="@(() => vehiculo.VehiculoId)"></ValidationMessage>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+						<div class="row input-group col-4">
+							@*Fecha*@
+							<label class="form-label" for="fecha"><strong>Fecha:</strong></label>
+							<InputDate id="fecha" class="form-control" @bind-Value="vehiculo.Fecha" />
+							<ValidationMessage For="@(() => vehiculo.Fecha)"></ValidationMessage>
+						</div>
+					</div>
+				</div>
+				<div class="mb-3">
+					@*Descripción*@
+					<label class="form-label" for="descripcion"><strong>Descripci&oacute;n:</strong></label>
+					<InputTextArea id="descripcion" class="form-control" @bind-Value="vehiculo.Descripcion" placeholder="Ingrese una descripción" />
+					<ValidationMessage For="@(() => vehiculo.Descripcion)"></ValidationMessage>
+				</div>
+				<div class="col-4">
+					@*Costo*@
+					<label class="form-label" for="Costo"><strong>Costo:</strong></label>
+					<InputNumber id="Costo" class="form-control" @bind-Value="vehiculo.Costo" />
+					<ValidationMessage For="@(() => vehiculo.Costo)"></ValidationMessage>
+				</div>
+
+				<div class="col-4">
+					@*Gastos*@
+					<label class="form-label" for="gastos"><strong>gastos:</strong></label>
+					<InputNumber id="Gastos" class="form-control" @bind-Value="vehiculo.Gastos"/>
+				</div>
+
+
+				<hr />
+				<div>
+					@*DETALLE Ticket*@
+					<fieldset class="border-success border border-1">
+						<h3>Mensajes</h3>
+						<div>
+							<div class="row">
+								@*Id*@
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+									<label>ID</label>
+									<div class="input-group">
+										<InputNumber @bind-Value="Id" class=" form-control" />
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<label>Accesorios:</label>
+									<InputSelect @bind-Value="accesorios" class="form-select">
+										@foreach (var item in accesorios)
+										{
+											@if (item.AccesoriosId == 0)
+											{
+												<option value="@item.AccesoriosId"></option>
+											}
+										}
+									</InputSelect>
+									<ValidationMessage For="@(() => vehiculoDetalle.AccesorrioId)" />
+								</div>
+
+
+								@*Valor*@
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+									<label>Valor</label>
+									<div class="input-group">
+										<InputNumber @bind-Value="Valor" class=" form-control" />
+									</div>
+								</div>
+
+								@*Boton Agregar*@
+								<div class="col-5">
+									<br>
+									<button type="button" class="btn btn-primary input-group-text" @onclick="AgregarDetalle">
+										<i class="bi bi-file-earmark-plus">Agregar</i>
+									</button>
+								</div>
+
+								@*Tabla de detalles*@
+								<hr />
+								<table class="table table-bordered table-light m-1">
+									<thead class="thead">
+										<tr class="table">
+											<th>Id</th>
+											<th>VehiculoId</th>
+											<th>AccesorioId</th>
+											<th>Valor</th>
+											<th>Acciones</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										@foreach (var detalle in vehiculo.vehiculosDetalles)
+										{
+											<tr>
+												<td>@detalle.DetalleId</td>
+												<td>@detalle.VehiculosId</td>
+												<td>@detalle.AccesorrioId</td>
+												<td>@detalle.Valor</td>
+												<td> <button class="btn btn-outline-primary" @onclick="@(() => RemoverDetalle(detalle))"><i class="bi bi-trash" />Remover</button></td>
+											</tr>
+										}
+									</tbody>
+								</table>
+
+
+
+							</div>
+						</div>
+					</fieldset>
+
+					@*Footer*@
+					<div class="card-footer d-flex justify-content-center">
+						<div class="px-2">
+							<a href="/Parcial/Index" class="btn btn-outline-primary"><i class="bi bi-box-arrow-left" /> Volver</a>
+						</div>
+						<button type="submit" class="btn btn-outline-success"><i class="bi bi-floppy-fill" /> Guardar</button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</EditForm>
 
 @code {
+	public Vehiculo vehiculo { get; set; } = new Vehiculo();
+	public VehiculosDetalle vehiculoDetalle { get; set; } = new();
+	public List<Accesorios> accesorios { get; set; } = new List<Accesorios>();
+	public string mensaje { get; set; } = string.Empty;
+
+	public int Id { get; set; }
+	public decimal Gastos { get; set; }
+
+	public decimal Valor { get; set; }
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (Id > 0)
+		{
+			vehiculo = await httpClient.GetFromJsonAsync<Vehiculo>($"api/Vehiculo/{Id}");
+		}
+	}
+
+
+	public async Task Guardar()
+	{
+		var response = await httpClient.PutAsJsonAsync("api/Vehiculo",Id);
+		if (response.IsSuccessStatusCode)
+		{
+			mensaje = "Se guardo";
+			navigationManager.NavigateTo("Parcial/Index");
+		}
+		else
+		{
+			mensaje = "No se guardo";
+		}
+	}
+
+
+	public void AgregarDetalle()
+	{
+		var nuevoDetalle = new VehiculosDetalle
+			{
+				DetalleId = Id,
+				Valor = Valor
+			};
+		vehiculo.vehiculosDetalles.Add(nuevoDetalle);
+		StateHasChanged();
+	}
+
+	public void RemoverDetalle(VehiculosDetalle detalle)
+	{
+		Id = detalle.DetalleId;
+		Valor = detalle.Valor;
+
+		vehiculo.vehiculosDetalles.Remove(detalle);
+	}
+
 
 }
