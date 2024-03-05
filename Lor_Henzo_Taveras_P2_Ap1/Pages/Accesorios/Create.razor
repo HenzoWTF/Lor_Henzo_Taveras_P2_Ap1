@@ -1,5 +1,68 @@
-﻿<h3>Create</h3>
+﻿@page "/Create/Accesorio"
+@using Library;
+@inject NavigationManager navigationManager
+@inject HttpClient httpClient
 
-@code {
+<PageTitle>Accesorio</PageTitle>
 
+
+<EditForm Model="@accesorios" OnValidSubmit="@Guardar">
+    <DataAnnotationsValidator /><DataAnnotationsValidator />
+
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3>Crear Nuevo Accesorios</h3>
+
+                <div class="card-body">
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <label>ID</label>
+                        <div class="input-group mb-3">
+                            <InputNumber @bind-Value="@accesorios.AccesoriosId" class=" form-control" />
+                            <ValidationMessage For="@(() => accesorios.AccesoriosId)" />
+                        </div>
+                    </div>
+
+
+                    <label>Descripci&oacuten</label>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="@accesorios.Descripcion" class=" form-control" />
+                        <ValidationMessage For="@(() => accesorios.Descripcion)" />
+                    </div>
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button class="btnn btn-outline-success"><i class="bi bi-floppy-fill " /> Guardar</button>
+                            <a href="Consulta_Prioridades" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</EditForm>
+
+@code{
+    public Accesorios accesorios = new Accesorios();
+    string mensaje = " ";
+
+    private async void Guardar(){
+
+        var response = await httpClient.PostAsJsonAsync("api/Accesorios", accesorios);
+        if (response.IsSuccessStatusCode)
+        {
+            mensaje = "Se guardo";
+            navigationManager.NavigateTo("Parcial/Index");
+        }
+        else
+        {
+            mensaje = "No se guardo";
+        }
+    }
 }
