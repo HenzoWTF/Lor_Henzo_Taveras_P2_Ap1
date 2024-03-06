@@ -186,7 +186,8 @@
 		var nuevoDetalle = new VehiculosDetalle
 		{
 			DetalleId = Id,
-			Valor = Valor1
+			Valor = Valor1,
+			AccesorrioId = vehiculoDetalle.AccesorrioId
 			};
 		vehiculo.Gastos += nuevoDetalle.Valor;
 		mensaje = $"Valor = {nuevoDetalle.Valor}";
