@@ -26,9 +26,7 @@ namespace Library
         [Required(ErrorMessage = "Debes de insertar el costo del vehiculo")]
         public decimal? Costo { get; set; }
 
-
-        [Required(ErrorMessage = "Debes de insertar los gastos")]
-        public decimal? Gastos { get; set; }
+        public decimal Gastos { get; set; }
 
         [ForeignKey("DetalleId")]
         public ICollection<VehiculosDetalle> vehiculosDetalles { get; set; } = new HashSet<VehiculosDetalle>();
