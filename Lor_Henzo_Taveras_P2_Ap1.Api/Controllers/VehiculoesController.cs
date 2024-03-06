@@ -32,7 +32,9 @@ namespace Lor_Henzo_Taveras_P2_Ap1.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Vehiculo>> GetVehiculo(int id)
         {
-            var vehiculo = await _context.Vehiculo.FindAsync(id);
+            var vehiculo = await _context.Vehiculo.Include(v => v.vehiculosDetalles)
+                .Where(v => v.VehiculoId == id).FirstOrDefaultAsync();
+
 
             if (vehiculo == null)
             {
