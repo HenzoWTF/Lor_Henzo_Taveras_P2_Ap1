@@ -10,7 +10,7 @@
             <a href="/Parcial/create" class="btn btn-outline-primary">Crear vehiculo</a>
         </div>
         <div class="card-body">
-            @if (vehiculo is not null)
+            @if (Vehiculo is not null)
             {
                 <table class="table table-striped table-hover">
                     <thead>
@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var vehiculo in vehiculo)
+                        @foreach (var vehiculo in Vehiculo)
                         {
                             <tr>
                                 <td>@vehiculo.VehiculoId</td>
@@ -56,12 +56,14 @@
 
 
 @code {
-    public List<Vehiculo>? vehiculo { get; set; }
+    public List<Vehiculo>? Vehiculo { get; set; }
     public int conteo { get; set; }
 
     protected override async void OnInitialized()
     {
-        vehiculo = await httpClient.GetFromJsonAsync<List<Vehiculo>>("api/Vehiculo");
+        Vehiculo = await httpClient.GetFromJsonAsync<List<Vehiculo>>("api/Vehiculoes");
+        conteo = Vehiculo != null ? Vehiculo!.Count() : 0;
+        StateHasChanged();
     }
 
 }

@@ -168,7 +168,7 @@
 
 	public async Task Guardar()
 	{
-		var response = await httpClient.PostAsJsonAsync("api/Vehiculo", vehiculo);
+		var response = await httpClient.PostAsJsonAsync("api/Vehiculoes", vehiculo);
 		if (response.IsSuccessStatusCode)
 		{
 			mensaje = "Se guardo";
