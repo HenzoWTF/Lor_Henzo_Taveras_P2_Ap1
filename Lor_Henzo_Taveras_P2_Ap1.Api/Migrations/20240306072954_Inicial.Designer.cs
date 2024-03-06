@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lor_Henzo_Taveras_P2_Ap1.Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240304230608_Inicial")]
+    [Migration("20240306072954_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -41,8 +41,7 @@ namespace Lor_Henzo_Taveras_P2_Ap1.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal?>("Costo")
-                        .IsRequired()
+                    b.Property<decimal>("Costo")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Descripcion")
@@ -52,8 +51,7 @@ namespace Lor_Henzo_Taveras_P2_Ap1.Api.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal?>("Gastos")
-                        .IsRequired()
+                    b.Property<decimal>("Gastos")
                         .HasColumnType("TEXT");
 
                     b.HasKey("VehiculoId");
