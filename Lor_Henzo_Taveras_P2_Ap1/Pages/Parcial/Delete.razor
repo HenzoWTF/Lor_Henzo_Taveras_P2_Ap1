@@ -26,8 +26,41 @@
 				<p class="mb-0">Descripci&oacute;n: @vehiculo.Descripcion</p>
 			</div>
 			<div class="mb-1">
-				<p class="mb-0">Costo: @vehiculo.Costo</p>
+				<p class="mb-0">Costo: @vehiculo.Costo.ToString("N2")</p>
 			</div>
+			<div class="mb-1">
+				<p class="mb-0">Gastos: @vehiculo.Gastos.ToString("N2")</p>
+			</div>
+
+			<div class="card-body">
+				<section>
+					@*Tabla Detalles*@
+					@if (vehiculo.vehiculosDetalles.Count > 0)
+					{
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Accesorios Id</th>
+									<th>Valor</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var detalle in vehiculo.vehiculosDetalles)
+								{
+									<tr>
+										<td>@detalle.DetalleId</td>
+										<td>@detalle.AccesorrioId</td>
+										<td>@detalle.Valor</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+						<p><strong>Cantidad de Detalles: </strong>@vehiculo.vehiculosDetalles.Count</p>
+					}
+				</section>
+			</div>
+
 
 		</div>
 
@@ -46,19 +79,21 @@
 	[Parameter]
 	public int Id { get; set; }
 	public Vehiculo vehiculo { get; set; } = new Vehiculo();
+	public List<Accesorios> accesorios = new List<Accesorios>();
 	public string mensaje { get; set; } = string.Empty;
 
 	protected override async Task OnInitializedAsync()
 	{
 		if (Id > 0)
 		{
-			vehiculo = await httpClient.GetFromJsonAsync<Vehiculo>($"api/Vehiculo/{Id}");
+			vehiculo = await httpClient.GetFromJsonAsync<Vehiculo>($"api/Vehiculoes/{Id}");
+			accesorios = await httpClient.GetFromJsonAsync<List<Accesorios>>("api/Accesorios");
 		}
 	}
 
 	public async Task Eliminar()
 	{
-		var response = await httpClient.DeleteAsync($"api/Vehiculo/{Id}");
+		var response = await httpClient.DeleteAsync($"api/Vehiculoes/{Id}");
 
 		if (response.IsSuccessStatusCode)
 		{

@@ -27,10 +27,10 @@
                         {
                             <tr>
                                 <td>@vehiculo.VehiculoId</td>
-                                <td>@vehiculo.Fecha.ToString("MM/dd/yyyy")</td>
+                                <td>@vehiculo.Fecha.ToString("MM-dd-yyyyy")</td>
                                 <td>@vehiculo.Descripcion</td>
-                                <td>@vehiculo.Costo</td>
-                                <td>@vehiculo.Gastos</td>
+                                <td>@vehiculo.Costo.ToString("N2")</td>
+                                <td>@vehiculo.Gastos.ToString("N2")</td>
                                 <td>
                                     <a href="/Parcial/Edit/@vehiculo.VehiculoId"><i class="bi bi-pencil-square" /></a>
                                     <a href="/Parcial/View/@vehiculo.VehiculoId"><i class="bi bi-eye-fill" /></a>

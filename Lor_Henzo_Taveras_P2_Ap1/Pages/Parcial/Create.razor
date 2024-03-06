@@ -48,8 +48,6 @@
 				</div>
 
 				<div class="col-4">
-				</div>
-				<div class="col-4">
 					@* Gastos *@
 					<label class="form-label" for="gastos"><strong>Gastos:</strong></label>
 					<InputNumber id="Gastos" class="form-control" @bind-Value="vehiculo.Gastos" disabled />
@@ -183,7 +181,7 @@
 
 	public void AgregarDetalle()
 	{
-		var nuevoDetalle = new VehiculosDetalle
+		var nuevoDetalle = new VehiculosDetalle()
 		{
 			DetalleId = Id,
 			Valor = Valor1,
@@ -194,6 +192,7 @@
 		mensaje = $"Gastos = {vehiculo.Gastos}";
 		vehiculo.vehiculosDetalles.Add(nuevoDetalle);
 		StateHasChanged();
+
 	}
 
 	public void RemoverDetalle(VehiculosDetalle detalle)
