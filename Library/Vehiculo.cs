@@ -24,11 +24,11 @@ namespace Library
         public string? Descripcion { get; set; }
 
         [Required(ErrorMessage = "Debes de insertar el costo del vehiculo")]
-        public decimal? Costo { get; set; }
+        public decimal Costo { get; set; }
 
         public decimal Gastos { get; set; }
 
         [ForeignKey("DetalleId")]
-        public ICollection<VehiculosDetalle> vehiculosDetalles { get; set; } = new HashSet<VehiculosDetalle>();
+        public ICollection<VehiculosDetalle> vehiculosDetalles { get; set; } = new List<VehiculosDetalle>();
     }
 }
