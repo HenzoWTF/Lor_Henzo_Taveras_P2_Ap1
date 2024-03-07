@@ -10,10 +10,8 @@ namespace Library
     public class VehiculosDetalle
     {
         [Key]
-		[Required(ErrorMessage = "Debes de insertar un Id")]
-		[Range(1, int.MaxValue, ErrorMessage = "El costo debe ser mayor que 1")]
 		public int DetalleId { get; set; }
-        public int VehiculosId { get; set; }
+        public int VehiculoId { get; set; }
 
 
         [Required(ErrorMessage = "Debes de insertar el Id del accesorio")]

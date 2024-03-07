@@ -12,8 +12,6 @@ namespace Library
     {
         [Key]
 
-        [Required(ErrorMessage = "Debes de insertar un Id")]
-		[Range(1, int.MaxValue, ErrorMessage = "El costo debe ser mayor que 1")]
 		public int VehiculoId { get; set; }
 
 
@@ -30,7 +28,7 @@ namespace Library
 
         public decimal Gastos { get; set; }
 
-        [ForeignKey("DetalleId")]
+        [ForeignKey("VehiculoId")]
         public ICollection<VehiculosDetalle> vehiculosDetalles { get; set; } = new List<VehiculosDetalle>();
     }
 }
