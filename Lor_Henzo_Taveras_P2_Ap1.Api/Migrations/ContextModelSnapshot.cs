@@ -59,6 +59,7 @@ namespace Lor_Henzo_Taveras_P2_Ap1.Api.Migrations
             modelBuilder.Entity("Library.VehiculosDetalle", b =>
                 {
                     b.Property<int>("DetalleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("AccesorrioId")
@@ -67,19 +68,21 @@ namespace Lor_Henzo_Taveras_P2_Ap1.Api.Migrations
                     b.Property<decimal>("Valor")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("VehiculosId")
+                    b.Property<int>("VehiculoId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("DetalleId");
 
-                    b.ToTable("VehiculoDetalle");
+                    b.HasIndex("VehiculoId");
+
+                    b.ToTable("VehiculosDetalle");
                 });
 
             modelBuilder.Entity("Library.VehiculosDetalle", b =>
                 {
                     b.HasOne("Library.Vehiculo", null)
                         .WithMany("vehiculosDetalles")
-                        .HasForeignKey("DetalleId")
+                        .HasForeignKey("VehiculoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

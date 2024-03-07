@@ -41,24 +41,30 @@ namespace Lor_Henzo_Taveras_P2_Ap1.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VehiculoDetalle",
+                name: "VehiculosDetalle",
                 columns: table => new
                 {
-                    DetalleId = table.Column<int>(type: "INTEGER", nullable: false),
-                    VehiculosId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DetalleId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    VehiculoId = table.Column<int>(type: "INTEGER", nullable: false),
                     AccesorrioId = table.Column<int>(type: "INTEGER", nullable: false),
                     Valor = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VehiculoDetalle", x => x.DetalleId);
+                    table.PrimaryKey("PK_VehiculosDetalle", x => x.DetalleId);
                     table.ForeignKey(
-                        name: "FK_VehiculoDetalle_Vehiculo_DetalleId",
-                        column: x => x.DetalleId,
+                        name: "FK_VehiculosDetalle_Vehiculo_VehiculoId",
+                        column: x => x.VehiculoId,
                         principalTable: "Vehiculo",
                         principalColumn: "VehiculoId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VehiculosDetalle_VehiculoId",
+                table: "VehiculosDetalle",
+                column: "VehiculoId");
         }
 
         /// <inheritdoc />
@@ -68,7 +74,7 @@ namespace Lor_Henzo_Taveras_P2_Ap1.Api.Migrations
                 name: "Accesorios");
 
             migrationBuilder.DropTable(
-                name: "VehiculoDetalle");
+                name: "VehiculosDetalle");
 
             migrationBuilder.DropTable(
                 name: "Vehiculo");
