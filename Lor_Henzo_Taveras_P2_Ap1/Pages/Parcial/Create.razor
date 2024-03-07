@@ -59,7 +59,7 @@
 				<div>
 					@*DETALLE Ticket*@
 					<fieldset class="border-success border border-1">
-						<h3>Mensajes</h3>
+						<h3>Detalles</h3>
 						<div>
 							<div class="row">
 								@*Id*@
@@ -186,8 +186,8 @@
 		{
 			DetalleId = Id,
 			Valor = Valor1,
-			AccesorrioId = vehiculoDetalle.AccesorrioId
-			};
+			AccesorrioId = vehiculoDetalle.AccesorrioId,
+		};
 		vehiculo.Gastos += nuevoDetalle.Valor;
 		mensaje = $"Valor = {nuevoDetalle.Valor}";
 		mensaje = $"Gastos = {vehiculo.Gastos}";
