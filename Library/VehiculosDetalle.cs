@@ -14,7 +14,7 @@ namespace Library
         public int VehiculoId { get; set; }
 
 
-        [Required(ErrorMessage = "Debes de insertar el Id del accesorio")]
+        [Required(ErrorMessage = "Debes de seleccionar el accesorio")]
         public int AccesorrioId { get; set; }
 
 
