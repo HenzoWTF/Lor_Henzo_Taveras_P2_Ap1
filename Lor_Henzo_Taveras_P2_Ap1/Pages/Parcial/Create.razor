@@ -97,6 +97,7 @@
 									<thead class="thead">
 										<tr class="table">
 											<th>AccesorioId</th>
+											<th>Descripci&oacute;n</th>
 											<th>Valor</th>
 											<th>Acciones</th>
 										</tr>
@@ -107,6 +108,7 @@
 										{
 											<tr>
 												<td>@detalle.AccesorrioId</td>
+												<td>@DescripcionAccesorios(detalle.AccesorrioId)</td>
 												<td>@detalle.Valor</td>
 												<td> <button class="btn btn-outline-primary" @onclick="@(() => RemoverDetalle(detalle))"><i class="bi bi-trash" />Remover</button></td>
 											</tr>
@@ -183,6 +185,15 @@
 		StateHasChanged();
 
 	}
+
+
+	public string DescripcionAccesorios(int id)
+	{
+		var descripcion = accesorios.FirstOrDefault(a => a.AccesoriosId == id);
+		return descripcion.Descripcion;
+	}
+
+
 
 	public void RemoverDetalle(VehiculosDetalle detalle)
 	{

@@ -42,8 +42,8 @@
 						<table class="table table-bordered">
 							<thead>
 								<tr>
-									<th>Id</th>
 									<th>Accesorios Id</th>
+									<th>Descripci&oacute;n</th>
 									<th>Valor</th>
 								</tr>
 							</thead>
@@ -51,8 +51,8 @@
 								@foreach (var detalle in vehiculo.vehiculosDetalles)
 								{
 									<tr>
-										<td>@detalle.DetalleId</td>
 										<td>@detalle.AccesorrioId</td>
+										<td>@DescripcionAccesorios(detalle.AccesorrioId)</td>
 										<td>@detalle.Valor</td>
 									</tr>
 								}
@@ -89,5 +89,13 @@
 			accesorios = await httpClient.GetFromJsonAsync<List<Accesorios>>("api/Accesorios");
 		}
 	}
+
+
+	public string DescripcionAccesorios(int id)
+	{
+		var descripcion = accesorios.FirstOrDefault(a => a.AccesoriosId == id);
+		return descripcion.Descripcion;
+	}
+
 
 }
