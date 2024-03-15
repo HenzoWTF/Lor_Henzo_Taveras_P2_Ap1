@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/LorHenzoTaverasP2Ap1Apiapi/apis/LorHenzoTaverasP2Ap1Api",
+      "type": "apis.azure"
+    }
+  }
+}
