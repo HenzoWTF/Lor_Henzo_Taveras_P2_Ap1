@@ -22,6 +22,12 @@
     <ProjectReference Include="..\Lor_Henzo_Taveras_P2_Ap1\Lor_Henzo_Taveras_P2_Ap1.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Vehiculo.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

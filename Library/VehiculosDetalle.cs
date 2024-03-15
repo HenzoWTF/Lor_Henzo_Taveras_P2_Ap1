@@ -10,14 +10,11 @@ namespace Library
     public class VehiculosDetalle
     {
         [Key]
-        public int DetalleId { get; set; }
+		public int DetalleId { get; set; }
+        public int VehiculoId { get; set; }
 
 
-        [Required(ErrorMessage = "Debes de insertar el Id del vehiculo")]
-        public int VehiculosId { get; set; }
-
-
-        [Required(ErrorMessage = "Debes de insertar el Id del accesorio")]
+        [Required(ErrorMessage = "Debes de seleccionar el accesorio")]
         public int AccesorrioId { get; set; }
 
 

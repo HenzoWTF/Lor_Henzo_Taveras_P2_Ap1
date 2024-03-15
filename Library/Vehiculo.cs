@@ -12,8 +12,7 @@ namespace Library
     {
         [Key]
 
-        [Required(ErrorMessage = "Debes de insertar un Id")]
-        public int VehiculoId { get; set; }
+		public int VehiculoId { get; set; }
 
 
         [Required(ErrorMessage = "Debe de insertar una Fecha")]
@@ -24,13 +23,12 @@ namespace Library
         public string? Descripcion { get; set; }
 
         [Required(ErrorMessage = "Debes de insertar el costo del vehiculo")]
-        public decimal? Costo { get; set; }
+		[Range(1, double.MaxValue, ErrorMessage = "El costo debe ser mayor que 1")]
+		public decimal Costo { get; set; }
 
+        public decimal Gastos { get; set; }
 
-        [Required(ErrorMessage = "Debes de insertar los gastos")]
-        public decimal? Gastos { get; set; }
-
-        [ForeignKey("DetalleId")]
-        public ICollection<VehiculosDetalle> vehiculosDetalles { get; set; } = new HashSet<VehiculosDetalle>();
+        [ForeignKey("VehiculoId")]
+        public ICollection<VehiculosDetalle> vehiculosDetalles { get; set; } = new List<VehiculosDetalle>();
     }
 }

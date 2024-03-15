@@ -6,6 +6,6 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5158") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://parcial2-api.azurewebsites.net") });
 
 await builder.Build().RunAsync();

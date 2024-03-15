@@ -32,7 +32,9 @@ namespace Lor_Henzo_Taveras_P2_Ap1.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Vehiculo>> GetVehiculo(int id)
         {
-            var vehiculo = await _context.Vehiculo.FindAsync(id);
+            var vehiculo = await _context.Vehiculo.Include(v => v.vehiculosDetalles)
+                .Where(v => v.VehiculoId == id).FirstOrDefaultAsync();
+
 
             if (vehiculo == null)
             {
@@ -78,11 +80,17 @@ namespace Lor_Henzo_Taveras_P2_Ap1.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Vehiculo>> PostVehiculo(Vehiculo vehiculo)
         {
-            _context.Vehiculo.Add(vehiculo);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVehiculo", new { id = vehiculo.VehiculoId }, vehiculo);
-        }
+			if (!VehiculoExists(vehiculo.VehiculoId))
+				_context.Vehiculo.Add(vehiculo);
+			else
+				_context.Vehiculo.Update(vehiculo);
+
+			await _context.SaveChangesAsync();
+
+			return Ok(vehiculo);
+
+		}
 
         // DELETE: api/Vehiculoes/5
         [HttpDelete("{id}")]

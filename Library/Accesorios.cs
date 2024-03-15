@@ -10,7 +10,9 @@ namespace Library
     public class Accesorios
     {
         [Key]
-        public int AccesoriosId { get; set; }
-        public string Descripcion { get; set; }
+		public int AccesoriosId { get; set; }
+
+		[Required(ErrorMessage = "Debes de insertar un accesorio")]
+		public string Descripcion { get; set; }
     }
 }

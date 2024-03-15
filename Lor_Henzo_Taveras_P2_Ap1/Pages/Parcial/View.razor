@@ -18,7 +18,7 @@
 			<h4><strong>Detalles del Vehiculo</strong></h4>
 			@*Datos*@
 			<div class="mb-1">
-				<p class="mb-0">Vehiculo: @vehiculo.VehiculoId</p>
+				<p class="mb-0">Veh&Iacute;culo: @vehiculo.VehiculoId</p>
 			</div>
 			<div class="mb-1">
 				<p class="mb-0">Fecha: @vehiculo.Fecha</p>
@@ -27,11 +27,42 @@
 				<p class="mb-0">Descripci&oacute;n: @vehiculo.Descripcion</p>
 			</div>
 			<div class="mb-1">
-				<p class="mb-0">Costo: @vehiculo.Costo</p>
+				<p class="mb-0">Costo: @vehiculo.Costo.ToString("N2")</p>
 			</div>
 			<div class="mb-1">
-				<p class="mb-0">Detalles: @vehiculo.vehiculosDetalles.</p>
+				<p class="mb-0">Gastos: @vehiculo.Gastos.ToString("N2")</p>
 			</div>
+
+
+			<div class="card-body">
+				<section>
+					@*Tabla Detalles*@
+					@if (vehiculo.vehiculosDetalles.Count > 0)
+					{
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Accesorios Id</th>
+									<th>Descripci&oacute;n</th>
+									<th>Valor</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var detalle in vehiculo.vehiculosDetalles)
+								{
+									<tr>
+										<td>@detalle.AccesorrioId</td>
+										<td>@DescripcionAccesorios(detalle.AccesorrioId)</td>
+										<td>@detalle.Valor</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+						<p><strong>Cantidad de Detalles: </strong>@vehiculo.vehiculosDetalles.Count</p>
+					}
+				</section>
+			</div>
+
 
 		</div>
 
@@ -48,13 +79,23 @@
 	[Parameter]
 	public int Id { get; set; }
 	public Vehiculo vehiculo { get; set; } = new Vehiculo();
+	public List<Accesorios> accesorios = new List<Accesorios>();
 
 	protected override async Task OnInitializedAsync()
 	{
 		if (Id > 0)
 		{
-			vehiculo = await httpClient.GetFromJsonAsync<Vehiculo>($"api/Vehiculo/{Id}");
+			vehiculo = await httpClient.GetFromJsonAsync<Vehiculo>($"api/Vehiculoes/{Id}");
+			accesorios = await httpClient.GetFromJsonAsync<List<Accesorios>>("api/Accesorios");
 		}
 	}
+
+
+	public string DescripcionAccesorios(int id)
+	{
+		var descripcion = accesorios.FirstOrDefault(a => a.AccesoriosId == id);
+		return descripcion.Descripcion;
+	}
+
 
 }

@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <h3>Accesorios</h3>
-            <a href="/Create/Accesorio" class="btn btn-outline-primary">Crear vehiculo</a>
+            <a href="/Create/Accesorio" class="btn btn-outline-primary">Crear Accesorios</a>
         </div>
         <div class="card-body">
             @if (Accesorios is not null)
@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>Accesorios Id</th>
-                            <th>Descripci&omicron;n</th>
+                            <th>Descripci&oacuten</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -35,8 +35,6 @@
     </div>
     <div class="card-footer">
         <div class="form-row justify-content-sm-between" aria-orientation="vertical">
-            <label>Cantidad de pagos</label>
-
             <div class="col-12 col-sm-3">
                 <label for="CantidadRegistro" class="col-form-label"><strong>Accesorios</strong>&nbsp;</label>
                 <input id="CantidadRegistro" @bind-value="@conteo" disabled class="form-control" />
